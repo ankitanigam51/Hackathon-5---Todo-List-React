@@ -1,21 +1,46 @@
-import React from "react";
+import React, { Component } from "react";
 import "./../styles/App.css";
 
-function App() 
+export default class App extends Component() 
 {
+	constructor(props){
+		super(props);
+
+		this.state = {
+			userInput: "",
+			list: []
+		}
+	}
+   
+   changeUserInput(input) {
+    this.setState({
+		userInput: input
+	});
+   }
+
+   addToList(input) {
+	   let listArray = this.state.list;
+	   listArray.push(input);
+	   this.setState({
+		   list: listArray,
+		   userInput: ""
+	   })
+   }
+
+   render() {
 	return (
-	<div id="main">
-		<input type="text" id="task"></input>
-		<button type="button" id="btn" onclick="add()">Add Items</button>
-	<ul>
-		<li className="list">Item 1</li>
-		<li className="list">Item 2</li>
-		<li className="list">Item 3</li>
-	</ul>
-	<button type="button" id="clear-list" onclick="removeAll()">Clear Items</button>
-	</div>
+	 <div className="to-DO-List">
+	 <input onChange=
+	 {(e) => this.changeUserInput(e.target.value)} 
+	 value={this.state.userInput} type="text" />
+	 <button onClick={ () => this.addToList(this.state.userInput)}>Click Here</button>
+	 <ul>
+		 {this.state.list.map( (val) => <li>{val}</li>)}
+	 </ul>
+	
+	 </div>
 	);
+ }
 }
 
 
-export default App;

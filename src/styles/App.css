@@ -4,7 +4,7 @@ h1 {
     }
     
 
-button{
+.to-DO-List button{
     color: #27aedb;
     text-align: center;
     justify-content: center;
@@ -13,4 +13,16 @@ button{
 
 .bg-pink{
 	background-color:pink;
+}
+
+.to-DO-List {
+    background: teal ;
+    padding: 7px;
+}
+
+.to-DO-List input{
+    background-color: lightblue ;
+    padding: 4px;
+    width: 100p;
+    height: 10px;
 }
