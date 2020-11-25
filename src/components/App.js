@@ -1,46 +1,42 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
+import ListItem from './ListItem';
 import "./../styles/App.css";
 
-export default class App extends Component() 
-{
-	constructor(props){
-		super(props);
-
-		this.state = {
-			userInput: "",
-			list: []
-		}
-	}
-   
-   changeUserInput(input) {
-    this.setState({
-		userInput: input
-	});
-   }
-
-   addToList(input) {
-	   let listArray = this.state.list;
-	   listArray.push(input);
-	   this.setState({
-		   list: listArray,
-		   userInput: ""
-	   })
-   }
-
-   render() {
+function App() {
+const [items, setItems] = useState([]);
+const [newItem, setNewItem] = useState("");
+const addItem = () => {
+	items.push(newItem);
+	setItems([...items]);
+    setNewItem("");
+}
+const newItemChanged = (evt) => {
+	setNewItem(evt.target.value);
+}
+const editHandler = (editedValue,itemIdx) => {
+	items[itemIdx] = editedValue;
+	setItems([...items])
+  }
+const deleteHandler = (itemIdx) => {
+  items.splice(itemIdx, 1);
+  setItems([...items])
+}
 	return (
-	 <div className="to-DO-List">
-	 <input onChange=
-	 {(e) => this.changeUserInput(e.target.value)} 
-	 value={this.state.userInput} type="text" />
-	 <button onClick={ () => this.addToList(this.state.userInput)}>Click Here</button>
-	 <ul>
-		 {this.state.list.map( (val) => <li>{val}</li>)}
-	 </ul>
-	
+	 <div id="main">
+	<textarea id="task" onChange={newItemChanged} placeholder="New Item" value={newItem}></textarea>
+	<button id="btn" onClick={addItem} 
+	disabled={newItem.trim().length === 0}>Add Item</button>
+	{items.map((item ,idx) => (
+		<ListItem item={item} 
+		key={`${item}_${idx}`} 
+		idx={idx} 
+		editHandler={editHandler} 
+		deleteHandler={deleteHandler}/>
+		))}
 	 </div>
 	);
- }
+
 }
 
 
+export default App;
